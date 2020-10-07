@@ -20,10 +20,18 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
+				'only' => [
+					'message-for-me', 'login'
+				],
                 'rules' => [
                     [
                         'actions' => ['login', 'error'],
                         'allow' => true,
+                    ],
+					[
+                        'actions' => ['message-for-me'],
+                        'allow' => true,
+						'roles' => ['?'],
                     ],
                     [
                         'actions' => ['logout', 'index'],
@@ -84,6 +92,16 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+	
+	/**
+     * Hello action.
+     *
+     * @return string
+     */
+    public function actionMessageForMe($message= 'Привет, красавчик!')
+    {
+        return $this->render('message-for-me', ['message' => $message]);
     }
 
     /**
